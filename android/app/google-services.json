@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "172034106942",
+    "project_id": "immoagence-364b7",
+    "storage_bucket": "immoagence-364b7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172034106942:android:f4047fc62ef41756b9d36f",
+        "android_client_info": {
+          "package_name": "com.example.immo_agence"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLjJL0LJAgMqKautVACjMS9JZ0wfvoIW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172034106942:android:08183b7b0158251bb9d36f",
+        "android_client_info": {
+          "package_name": "com.example.immoagence"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLjJL0LJAgMqKautVACjMS9JZ0wfvoIW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

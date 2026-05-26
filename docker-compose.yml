@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: immo_agence
+      POSTGRES_USER: immo_user
+      POSTGRES_PASSWORD: immo_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - immo_postgres_data:/var/lib/postgresql/data
+      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/001_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U immo_user -d immo_agence"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgres://immo_user:immo_password@db:5432/immo_agence
+      JWT_SECRET: change_this_secret_before_deployment
+      JWT_EXPIRES_IN: 7d
+      CORS_ORIGIN: "*"
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  immo_postgres_data:

@@ -1,0 +1,22 @@
+{
+  "name": "immo-agence-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API ImmoAgence avec authentification, roles, CRUD admin et PostgreSQL.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:seed": "node src/seed.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "paydunya": "^1.0.12",
+    "pg": "^8.16.3"
+  }
+}

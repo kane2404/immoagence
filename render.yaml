@@ -1,5 +1,16 @@
 services:
   - type: web
+    name: immo-agence
+    runtime: docker
+    dockerfilePath: ./Dockerfile.web
+    dockerContext: .
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: API_BASE_URL
+        value: https://immo-agence-api.onrender.com
+
+  - type: web
     name: immo-agence-api
     runtime: docker
     rootDir: backend

@@ -17,9 +17,9 @@ services:
       - key: CORS_ORIGIN
         sync: false
       - key: DATABASE_URL
-        fromDatabase:
-          name: immo-agence-db
-          property: connectionString
+        sync: false
+      - key: DATABASE_SSL
+        value: "true"
       - key: PAYDUNYA_MODE
         value: live
       - key: PAYDUNYA_MASTER_KEY
@@ -44,8 +44,7 @@ services:
         sync: false
       - key: PAYDUNYA_IPN_URL
         sync: false
-
-databases:
-  - name: immo-agence-db
-    databaseName: immo_agence
-    user: immo_agence_user
+      - key: FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_BASE64
+        sync: false

@@ -23,6 +23,7 @@ const {
   confirmCheckoutInvoice,
   createCheckoutInvoice,
 } = require('./paydunya');
+const { uploadImage } = require('./storage');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -37,7 +38,7 @@ app.use(
     credentials: true,
   }),
 );
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: '8mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(uploadDir));
 
@@ -671,10 +672,14 @@ app.post('/admin/uploads/images', requireAuth, async (req, res, next) => {
       .replace(/-+/g, '-')
       .slice(0, 60);
     const outputName = `${Date.now()}-${safeName}.${extension}`;
-    await fs.mkdir(uploadDir, { recursive: true });
-    await fs.writeFile(path.join(uploadDir, outputName), Buffer.from(match[2], 'base64'));
+    const upload = await uploadImage({
+      buffer: Buffer.from(match[2], 'base64'),
+      contentType: `image/${extension === 'jpg' ? 'jpeg' : extension}`,
+      outputName,
+      uploadDir,
+    });
 
-    return res.status(201).json({ url: `/uploads/${outputName}` });
+    return res.status(201).json(upload);
   } catch (error) {
     return next(error);
   }
@@ -845,6 +850,9 @@ app.use((error, _req, res, _next) => {
 
 async function start() {
   await fs.mkdir(uploadDir, { recursive: true });
+  const schemaSql = await fs.readFile(path.join(__dirname, '..', 'db', 'schema.sql'), 'utf8');
+  await query(schemaSql);
+
   await query('alter table users add column if not exists is_blocked boolean not null default false');
   await query('alter table users add column if not exists fcm_token text');
   await query('alter table properties add column if not exists image_url text');
